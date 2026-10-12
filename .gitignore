@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Moi truong ao
+venv/
+.venv/
+env/
+
+# Bi mat
+.env
+*.secret
+
+# Du lieu sinh ra
+out/
+*.log
+graph_cache/
+
+# He dieu hanh / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

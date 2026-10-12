@@ -1,0 +1,13 @@
+loai,ten_hien_thi,tuoi_tho_nam,suy_giam_nam,do_quan_trong,chi_phi_thay_the_vnd,he_so_sua_chua,chu_ky_bao_tri_thang
+nguon_luoi,Nguồn lưới EVN,40,0.010,5,0,0.10,12
+may_bien_ap,Máy biến áp,30,0.020,5,800000000,0.30,12
+may_phat,Máy phát điện dự phòng,25,0.035,5,600000000,0.35,6
+ats,Bộ chuyển nguồn tự động,20,0.030,5,80000000,0.30,6
+tu_tong,Tủ điện tổng MSB,25,0.025,5,350000000,0.28,12
+tu_phan_phoi,Tủ phân phối MDB/DB,20,0.030,3,60000000,0.25,12
+busway,Tuyến thanh dẫn busway,30,0.020,4,2500000,0.20,24
+noi_mem,Nối mềm flexible link,15,0.045,3,12000000,0.40,12
+thang_mang_cap,Thang / máng cáp,25,0.015,2,450000,0.15,36
+tuyen_cap,Tuyến cáp,25,0.020,3,350000,0.20,24
+mach,Mạch circuit,20,0.030,2,0,0.20,12
+phu_tai,Phụ tải cuối,10,0.050,1,1500000,0.30,12

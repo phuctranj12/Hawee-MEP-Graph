@@ -1,0 +1,40 @@
+Hawee-MEP-Graph
+===============
+
+Ghi cong / Attribution
+----------------------
+
+Du an nay duoc truyen cam hung tu cong trinh nghien cuu:
+
+    "Improving BIM Interoperability for MEP Systems Using Graphs"
+    (AssetPulse) - MACAD Thesis, IAAC
+    Tac gia: Krisztian Hajdu, Scott Lebow
+    https://github.com/sclebow/MACAD-Thesis-MEP-Graph
+
+Pham vi su dung:
+
+1. Y tuong va phuong phap
+   - Y tuong bieu dien he thong dien duoi dang do thi co huong (DAG)
+   - Phuong phap tinh diem rui ro dua tren cong suat lan truyen va so
+     thiet bi ha nguon
+   - Phuong phap mo phong tuoi tho con lai (RUL) theo thang, co rang buoc
+     ngan sach gio cong va chi phi
+
+2. KHONG sao chep ma nguon
+   Toan bo ma nguon trong repo nay duoc viet moi tu dau, dua tren tai lieu
+   mo ta cong khai (Readme.md cua repo goc). Ly do: repo goc KHONG co file
+   LICENSE o cap repo; giay phep kieu MIT chi xuat hien trong phan header
+   cua 24 file, va hai file quan trong nhat (bim_to_graph.py,
+   simple_graphml_viewer.py) KHONG co header giay phep nao.
+
+   Do do khong co co so phap ly ro rang de sao chep truc tiep hai file do.
+   Cach xu ly: viet lai sach (clean-room implementation) tu dac ta.
+
+3. Khac biet so voi ban goc
+   - Thanh dan (busway) la NODE, khong phai canh -> mang duoc tuoi tho,
+     chi phi, lich bao tri rieng
+   - Bo sung loai: busway, noi mem, thang mang cap
+   - Chuan dat ten Hawee: MSB / MDB thay cho switchboard / panel
+   - Dinh muc, chi phi theo Viet Nam (VND, 220/380V, 50Hz)
+   - Lop truy xuat + MCP server cho Claude (ban goc khong co)
+   - Lien ket sang so hieu ban ve va du an trong he NS cua Hawee

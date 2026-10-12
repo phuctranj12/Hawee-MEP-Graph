@@ -1,0 +1,11 @@
+# Bat buoc
+networkx>=3.2
+
+# MCP server (giai doan A)
+mcp>=2.0   # chay duoc ca mcp 1.x (xem mcp_server/server.py)
+
+# Neo4j (giai doan B - tuy chon)
+neo4j>=5.20
+
+# Kiem thu
+pytest>=8.0

@@ -1,0 +1,30 @@
+ma_cv,loai_thiet_bi,loai_cong_viec,chu_ky_thang,mo_ta,uu_tien,gio_cong,chi_phi_vnd,chung_chi_yeu_cau
+MBA-01,may_bien_ap,kiem_tra,6,Kiểm tra bằng mắt: rò rỉ dầu đổi màu ăn mòn vết phóng điện,2,1.0,200000,An toàn điện
+MBA-02,may_bien_ap,do_kiem,24,Đo tỉ số biến và điện trở cuộn dây,1,2.0,1500000,An toàn điện bậc cao
+MBA-03,may_bien_ap,do_kiem,12,Đo điện trở tiếp địa,1,1.0,600000,An toàn điện
+MBA-04,may_bien_ap,ve_sinh,12,Vệ sinh sứ cách điện và cánh tản nhiệt,2,3.0,500000,An toàn điện
+MSB-01,tu_tong,kiem_tra,3,Kiểm tra nhiệt độ thanh cái và đầu cốt bằng camera nhiệt,1,1.5,0,An toàn điện
+MSB-02,tu_tong,siet_lai,12,Siết lại toàn bộ đầu nối theo lực siết nhà sản xuất,1,4.0,300000,An toàn điện bậc cao
+MSB-03,tu_tong,do_kiem,12,Đo điện trở cách điện giữa các pha và pha với đất,1,2.0,800000,An toàn điện bậc cao
+MSB-04,tu_tong,ve_sinh,12,Vệ sinh bên trong tủ hút bụi kiểm tra gioăng kín,2,3.0,400000,An toàn điện
+MSB-05,tu_tong,do_kiem,36,Thử đặc tính cắt của ACB/MCCB chính,1,4.0,3500000,An toàn điện bậc cao
+MDB-01,tu_phan_phoi,kiem_tra,6,Kiểm tra nhiệt độ và tình trạng aptomat,2,0.5,0,An toàn điện
+MDB-02,tu_phan_phoi,siet_lai,12,Siết lại đầu nối trong tủ,2,1.5,150000,An toàn điện
+MDB-03,tu_phan_phoi,do_kiem,12,Đo dòng tải từng pha kiểm tra lệch pha,2,1.0,0,An toàn điện
+MDB-04,tu_phan_phoi,ve_sinh,12,Vệ sinh tủ kiểm tra nhãn mạch,3,1.0,100000,
+BUS-01,busway,kiem_tra,6,Kiểm tra nhiệt độ mối nối bằng camera nhiệt,1,1.0,0,An toàn điện
+BUS-02,busway,siet_lai,24,Siết lại bulong mối nối theo lực siết nhà sản xuất,1,3.0,200000,An toàn điện bậc cao
+BUS-03,busway,do_kiem,24,Đo điện trở cách điện toàn tuyến,1,2.5,800000,An toàn điện bậc cao
+BUS-04,busway,kiem_tra,12,Kiểm tra giá đỡ chống cháy xuyên sàn và biến dạng tuyến,2,2.0,150000,Làm việc trên cao
+NM-01,noi_mem,kiem_tra,12,Kiểm tra nứt rạn biến dạng và độ co giãn còn lại,1,0.5,0,An toàn điện
+NM-02,noi_mem,siet_lai,12,Siết lại đầu nối hai đầu nối mềm,1,1.0,100000,An toàn điện
+TMC-01,thang_mang_cap,kiem_tra,12,Kiểm tra ăn mòn độ võng và liên kết tiếp địa,2,2.0,0,Làm việc trên cao
+TMC-02,thang_mang_cap,ve_sinh,36,Vệ sinh tuyến loại bỏ vật lạ,3,3.0,200000,Làm việc trên cao
+TC-01,tuyen_cap,do_kiem,24,Đo điện trở cách điện tuyến cáp,1,2.0,700000,An toàn điện bậc cao
+TC-02,tuyen_cap,kiem_tra,12,Kiểm tra vỏ cáp đầu cốt và nhãn tuyến,2,1.0,0,An toàn điện
+ATS-01,ats,do_kiem,6,Thử chuyển nguồn có tải,1,2.0,300000,An toàn điện bậc cao
+ATS-02,ats,kiem_tra,6,Kiểm tra bộ điều khiển và tín hiệu phản hồi,1,1.0,0,An toàn điện
+MP-01,may_phat,kiem_tra,1,Chạy thử không tải kiểm tra dầu nước làm mát,1,1.0,100000,
+MP-02,may_phat,do_kiem,6,Chạy thử có tải kiểm tra sụt áp và tần số,1,3.0,2000000,An toàn điện bậc cao
+MP-03,may_phat,thay_the,12,Thay dầu nhớt lọc dầu lọc gió,2,3.0,4500000,
+PT-01,phu_tai,kiem_tra,12,Kiểm tra hoạt động và độ sáng đo lux nếu là chiếu sáng,3,0.2,0,
