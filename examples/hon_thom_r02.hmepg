@@ -1,0 +1,273 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="loai" for="edge" attr.name="loai" attr.type="string" />
+  <key id="suy_dien" for="node" attr.name="suy_dien" attr.type="long" />
+  <key id="mo_ta_tuyen" for="node" attr.name="mo_ta_tuyen" attr.type="string" />
+  <key id="ma_tuyen" for="node" attr.name="ma_tuyen" attr.type="string" />
+  <key id="chieu_dai_m" for="node" attr.name="chieu_dai_m" attr.type="double" />
+  <key id="dong_dien_dinh_muc_A" for="node" attr.name="dong_dien_dinh_muc_A" attr.type="double" />
+  <key id="diem_rui_ro" for="node" attr.name="diem_rui_ro" attr.type="double" />
+  <key id="so_thiet_bi_ha_nguon" for="node" attr.name="so_thiet_bi_ha_nguon" attr.type="long" />
+  <key id="cong_suat_lan_truyen" for="node" attr.name="cong_suat_lan_truyen" attr.type="double" />
+  <key id="revit_category" for="node" attr.name="revit_category" attr.type="string" />
+  <key id="revit_id" for="node" attr.name="revit_id" attr.type="string" />
+  <key id="cong_trinh" for="node" attr.name="cong_trinh" attr.type="string" />
+  <key id="revit_ids_gop" for="node" attr.name="revit_ids_gop" attr.type="string" />
+  <key id="so_phan_tu_gop" for="node" attr.name="so_phan_tu_gop" attr.type="long" />
+  <key id="tang" for="node" attr.name="tang" attr.type="string" />
+  <key id="ma_thiet_bi" for="node" attr.name="ma_thiet_bi" attr.type="string" />
+  <key id="ten" for="node" attr.name="ten" attr.type="string" />
+  <key id="loai" for="node" attr.name="loai" attr.type="string" />
+  <key id="so_canh_tu_supply_from_id" for="graph" attr.name="so_canh_tu_supply_from_id" attr.type="long" />
+  <key id="schema" for="graph" attr.name="schema" attr.type="string" />
+  <key id="ten_do_thi" for="graph" attr.name="ten_do_thi" attr.type="string" />
+  <graph edgedefault="directed">
+    <node id="572519">
+      <data key="loai">tu_tong</data>
+      <data key="ten">MSB3</data>
+      <data key="ma_thiet_bi">9</data>
+      <data key="tang">F11.TẦNG HẦM</data>
+      <data key="so_phan_tu_gop">8</data>
+      <data key="revit_ids_gop">572519,974489,974521,974540,974605,974613,974654,974677</data>
+      <data key="cong_trinh">F11</data>
+      <data key="revit_id">572519</data>
+      <data key="revit_category">Electrical Equipment</data>
+      <data key="cong_suat_lan_truyen">0.0</data>
+      <data key="so_thiet_bi_ha_nguon">8</data>
+      <data key="diem_rui_ro">0.7273</data>
+    </node>
+    <node id="625617">
+      <data key="loai">tu_phan_phoi</data>
+      <data key="ten">MDB.F12</data>
+      <data key="ma_thiet_bi">16</data>
+      <data key="tang">F12.TẦNG HẦM</data>
+      <data key="so_phan_tu_gop">3</data>
+      <data key="revit_ids_gop">625617,974956,974994</data>
+      <data key="cong_trinh">F12</data>
+      <data key="revit_id">625617</data>
+      <data key="revit_category">Electrical Equipment</data>
+      <data key="cong_suat_lan_truyen">0.0</data>
+      <data key="so_thiet_bi_ha_nguon">0</data>
+      <data key="diem_rui_ro">0.0</data>
+    </node>
+    <node id="882080">
+      <data key="loai">tu_phan_phoi</data>
+      <data key="ten">MDB.F13</data>
+      <data key="ma_thiet_bi">19</data>
+      <data key="tang">F13.TẦNG HẦM</data>
+      <data key="so_phan_tu_gop">3</data>
+      <data key="revit_ids_gop">882080,975163,975194</data>
+      <data key="cong_trinh">F13</data>
+      <data key="revit_id">882080</data>
+      <data key="revit_category">Electrical Equipment</data>
+      <data key="cong_suat_lan_truyen">0.0</data>
+      <data key="so_thiet_bi_ha_nguon">0</data>
+      <data key="diem_rui_ro">0.0</data>
+    </node>
+    <node id="973197">
+      <data key="loai">tu_phan_phoi</data>
+      <data key="ten">MDB.F10</data>
+      <data key="ma_thiet_bi">21</data>
+      <data key="tang">F10.TẦNG HẦM</data>
+      <data key="so_phan_tu_gop">3</data>
+      <data key="revit_ids_gop">973197,973329,973368</data>
+      <data key="cong_trinh">F10</data>
+      <data key="revit_id">973197</data>
+      <data key="revit_category">Electrical Equipment</data>
+      <data key="cong_suat_lan_truyen">0.0</data>
+      <data key="so_thiet_bi_ha_nguon">0</data>
+      <data key="diem_rui_ro">0.0</data>
+    </node>
+    <node id="974709">
+      <data key="loai">tu_phan_phoi</data>
+      <data key="ten">MDB.F11</data>
+      <data key="ma_thiet_bi">31</data>
+      <data key="tang">F11.TẦNG HẦM</data>
+      <data key="so_phan_tu_gop">3</data>
+      <data key="revit_ids_gop">974709,974803,974868</data>
+      <data key="cong_trinh">F11</data>
+      <data key="revit_id">974709</data>
+      <data key="revit_category">Electrical Equipment</data>
+      <data key="cong_suat_lan_truyen">0.0</data>
+      <data key="so_thiet_bi_ha_nguon">0</data>
+      <data key="diem_rui_ro">0.0</data>
+    </node>
+    <node id="busway:P10">
+      <data key="loai">busway</data>
+      <data key="ten">Busway P10</data>
+      <data key="dong_dien_dinh_muc_A">1000.0</data>
+      <data key="chieu_dai_m">68.52</data>
+      <data key="ma_tuyen">P10</data>
+      <data key="mo_ta_tuyen">From MSB3 To MDB-F10</data>
+      <data key="so_phan_tu_gop">43</data>
+      <data key="revit_ids_gop">615796,867342,867347,867456,867457,868904,868917,868935,868940,868958,868963,868968,868973,868978,869055,869065,869066,973527,974065,974183,974276,974289,975497,996452,997253,997700,997912,997917,999230,999304,999318,999352,1022673,1022902,1028321,1028334,1030394,1032741,1032868,1033663,1033779,1033794,1034421</data>
+      <data key="revit_id">busway:P10</data>
+      <data key="revit_category">Busbar run</data>
+      <data key="cong_suat_lan_truyen">0.0</data>
+      <data key="so_thiet_bi_ha_nguon">1</data>
+      <data key="diem_rui_ro">0.0909</data>
+    </node>
+    <node id="busway:P11">
+      <data key="loai">busway</data>
+      <data key="ten">Busway P11</data>
+      <data key="dong_dien_dinh_muc_A">1000.0</data>
+      <data key="chieu_dai_m">3.89</data>
+      <data key="ma_tuyen">P11</data>
+      <data key="mo_ta_tuyen">From MSB3 To MDB-F11</data>
+      <data key="so_phan_tu_gop">9</data>
+      <data key="revit_ids_gop">615895,623959,1023082,1023095,1023096,1023101,1023115,1023135,1040843</data>
+      <data key="revit_id">busway:P11</data>
+      <data key="revit_category">Busbar run</data>
+      <data key="cong_suat_lan_truyen">0.0</data>
+      <data key="so_thiet_bi_ha_nguon">1</data>
+      <data key="diem_rui_ro">0.0909</data>
+    </node>
+    <node id="busway:P12">
+      <data key="loai">busway</data>
+      <data key="ten">Busway P12</data>
+      <data key="dong_dien_dinh_muc_A">1250.0</data>
+      <data key="chieu_dai_m">95.92</data>
+      <data key="ma_tuyen">P12</data>
+      <data key="mo_ta_tuyen">From MSB3 To MDB-F12</data>
+      <data key="so_phan_tu_gop">50</data>
+      <data key="revit_ids_gop">828068,930552,940900,940963,985402,986004,986436,986449,986454,986490,987476,987491,987504,988029,988034,989087,989092,989097,989854,989965,1023678,1023924,1025616,1026568,1026588,1026913,1026918,1027397,1027461,1027999,1028012,1028097,1028110,1028137,1028155,1028175,1028188,1028372,1028385,1028407,1029623,1041360,1041375,1042283,1046554,1049697,1049771,1049818,1049864,1049947</data>
+      <data key="revit_id">busway:P12</data>
+      <data key="revit_category">Busbar run</data>
+      <data key="cong_suat_lan_truyen">0.0</data>
+      <data key="so_thiet_bi_ha_nguon">1</data>
+      <data key="diem_rui_ro">0.0909</data>
+    </node>
+    <node id="busway:P13">
+      <data key="loai">busway</data>
+      <data key="ten">Busway P13</data>
+      <data key="dong_dien_dinh_muc_A">1000.0</data>
+      <data key="chieu_dai_m">141.17</data>
+      <data key="ma_tuyen">P13</data>
+      <data key="mo_ta_tuyen">From MSB3 To MDB-F13</data>
+      <data key="so_phan_tu_gop">76</data>
+      <data key="revit_ids_gop">930866,941562,942147,942326,942331,942336,942341,942346,942585,942590,961230,961389,961394,961399,961404,961409,965186,965643,965648,970989,981078,981274,981292,981297,981590,981916,982720,984272,984646,984876,986053,987939,988006,989163,989168,989173,989306,989696,994019,994523,994694,994716,994736,995027,995040,1026684,1026955,1026960,1027412,1027463,1028039,1028044,1028049,1028211,1028217,1028230,1028243,1028256,1028261,1028266,1028352,1028365,1028422,1028437,1028452,1042107,1042524,1042542,1042681,1045600,1045620,1045965,1046721,1047484,1047550,1050587</data>
+      <data key="revit_id">busway:P13</data>
+      <data key="revit_category">Busbar run</data>
+      <data key="cong_suat_lan_truyen">0.0</data>
+      <data key="so_thiet_bi_ha_nguon">1</data>
+      <data key="diem_rui_ro">0.0909</data>
+    </node>
+    <node id="busway:T1">
+      <data key="loai">busway</data>
+      <data key="ten">Busway T1</data>
+      <data key="dong_dien_dinh_muc_A">2000.0</data>
+      <data key="chieu_dai_m">8.21</data>
+      <data key="ma_tuyen">T1</data>
+      <data key="mo_ta_tuyen">From TR-01-F To MSB3</data>
+      <data key="so_phan_tu_gop">10</data>
+      <data key="revit_ids_gop">581655,1019850,1020435,1021417,1021720,1021999,1022198,1038618,1040125,1040136</data>
+      <data key="revit_id">busway:T1</data>
+      <data key="revit_category">Busbar run</data>
+      <data key="cong_suat_lan_truyen">0.0</data>
+      <data key="so_thiet_bi_ha_nguon">9</data>
+      <data key="diem_rui_ro">0.8182</data>
+    </node>
+    <node id="suy_dien:TR-01-F">
+      <data key="loai">may_bien_ap</data>
+      <data key="ten">TR-01-F</data>
+      <data key="suy_dien">1</data>
+      <data key="revit_id">suy_dien:TR-01-F</data>
+      <data key="revit_category">Electrical Equipment</data>
+      <data key="cong_suat_lan_truyen">0.0</data>
+      <data key="so_thiet_bi_ha_nguon">11</data>
+      <data key="diem_rui_ro">1.0</data>
+    </node>
+    <node id="busway:T2">
+      <data key="loai">busway</data>
+      <data key="ten">Busway T2</data>
+      <data key="dong_dien_dinh_muc_A">2000.0</data>
+      <data key="chieu_dai_m">12.29</data>
+      <data key="ma_tuyen">T2</data>
+      <data key="mo_ta_tuyen">From TR-02-F To MSB3</data>
+      <data key="so_phan_tu_gop">13</data>
+      <data key="revit_ids_gop">581658,999557,999570,999656,999669,1020052,1020420,1020433,1020741,1020920,1023151,1037936,1038091</data>
+      <data key="revit_id">busway:T2</data>
+      <data key="revit_category">Busbar run</data>
+      <data key="cong_suat_lan_truyen">0.0</data>
+      <data key="so_thiet_bi_ha_nguon">9</data>
+      <data key="diem_rui_ro">0.8182</data>
+    </node>
+    <node id="suy_dien:TR-02-F">
+      <data key="loai">may_bien_ap</data>
+      <data key="ten">TR-02-F</data>
+      <data key="suy_dien">1</data>
+      <data key="revit_id">suy_dien:TR-02-F</data>
+      <data key="revit_category">Electrical Equipment</data>
+      <data key="cong_suat_lan_truyen">0.0</data>
+      <data key="so_thiet_bi_ha_nguon">11</data>
+      <data key="diem_rui_ro">1.0</data>
+    </node>
+    <node id="noi_mem:T2">
+      <data key="loai">noi_mem</data>
+      <data key="ten">Nối mềm T2</data>
+      <data key="so_phan_tu_gop">4</data>
+      <data key="revit_ids_gop">1040549,1040550,1040552,1040553</data>
+      <data key="revit_id">noi_mem:T2</data>
+      <data key="revit_category">Flexible link</data>
+      <data key="cong_suat_lan_truyen">0.0</data>
+      <data key="so_thiet_bi_ha_nguon">10</data>
+      <data key="diem_rui_ro">0.9091</data>
+    </node>
+    <node id="noi_mem:T1">
+      <data key="loai">noi_mem</data>
+      <data key="ten">Nối mềm T1</data>
+      <data key="so_phan_tu_gop">4</data>
+      <data key="revit_ids_gop">1040554,1040555,1040556,1040557</data>
+      <data key="revit_id">noi_mem:T1</data>
+      <data key="revit_category">Flexible link</data>
+      <data key="cong_suat_lan_truyen">0.0</data>
+      <data key="so_thiet_bi_ha_nguon">10</data>
+      <data key="diem_rui_ro">0.9091</data>
+    </node>
+    <edge source="572519" target="busway:P10">
+      <data key="loai">supplies</data>
+    </edge>
+    <edge source="572519" target="busway:P11">
+      <data key="loai">supplies</data>
+    </edge>
+    <edge source="572519" target="busway:P12">
+      <data key="loai">supplies</data>
+    </edge>
+    <edge source="572519" target="busway:P13">
+      <data key="loai">supplies</data>
+    </edge>
+    <edge source="busway:P10" target="973197">
+      <data key="loai">supplies</data>
+    </edge>
+    <edge source="busway:P11" target="974709">
+      <data key="loai">supplies</data>
+    </edge>
+    <edge source="busway:P12" target="625617">
+      <data key="loai">supplies</data>
+    </edge>
+    <edge source="busway:P13" target="882080">
+      <data key="loai">supplies</data>
+    </edge>
+    <edge source="busway:T1" target="572519">
+      <data key="loai">supplies</data>
+    </edge>
+    <edge source="suy_dien:TR-01-F" target="noi_mem:T1">
+      <data key="loai">supplies</data>
+    </edge>
+    <edge source="busway:T2" target="572519">
+      <data key="loai">supplies</data>
+    </edge>
+    <edge source="suy_dien:TR-02-F" target="noi_mem:T2">
+      <data key="loai">supplies</data>
+    </edge>
+    <edge source="noi_mem:T2" target="busway:T2">
+      <data key="loai">supplies</data>
+    </edge>
+    <edge source="noi_mem:T1" target="busway:T1">
+      <data key="loai">supplies</data>
+    </edge>
+    <data key="ten_do_thi">hon_thom_r02</data>
+    <data key="schema">hawee_mep_v1</data>
+    <data key="so_canh_tu_supply_from_id">0</data>
+  </graph>
+</graphml>

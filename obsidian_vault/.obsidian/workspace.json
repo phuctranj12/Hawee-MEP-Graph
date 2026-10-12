@@ -11,10 +11,14 @@
             "id": "fe47724e94d0ee4a",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "P204.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "P204"
             }
           }
         ]
@@ -184,30 +188,30 @@
   "active": "fe47724e94d0ee4a",
   "lastOpenFiles": [
     "SWITCHBOARD.md",
-    "2026-10-12.md",
-    "208V - Fusible 60A (n1487106).md",
-    "208V - Fusible 60A.md",
-    "12 V (n1453092).md",
-    "12 V (n1453067).md",
-    "12 V (n1453028).md",
-    "12 V (n1453009).md",
-    "12 V (n1452994).md",
-    "12 V (n1452979).md",
-    "12 V (n1452967).md",
-    "12 V (n1453208).md",
-    "12 V (n1453190).md",
-    "12 V (n1453160).md",
-    "12 V (n1453148).md",
-    "12 V (n1453136).md",
-    "12 V (n1453124).md",
-    "12 V (n1453300).md",
-    "12 V (n1453288).md",
-    "12 V (n1453276).md",
-    "12 V (n1453264).md",
-    "12 V (n1453246).md",
-    "12 V (n1444536).md",
-    "12 V (n1444416).md",
-    "12 V (n1444393).md",
-    "12 V (n1444294).md"
+    "MAIN1.md",
+    "Standard (n1465853).md",
+    "Standard (n1465852).md",
+    "Standard (n1465851).md",
+    "Standard (n1465850).md",
+    "Standard (n1465849).md",
+    "Standard (n1465848).md",
+    "Standard (n1465847).md",
+    "Standard (n1465846).md",
+    "Standard (n1465845).md",
+    "Standard (n1465844).md",
+    "Standard (n1465843).md",
+    "Standard (n1465842).md",
+    "Standard (n1465841).md",
+    "Standard (n1465840).md",
+    "Standard (n1465839).md",
+    "Standard (n1465838).md",
+    "Standard (n1464866).md",
+    "Standard (n1464865).md",
+    "Standard (n1464864).md",
+    "Standard (n1464863).md",
+    "Standard (n1464862).md",
+    "Standard (n1464861).md",
+    "Standard (n1464860).md",
+    "Standard (n1464859).md"
   ]
 }

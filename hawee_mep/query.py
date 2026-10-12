@@ -108,33 +108,11 @@ class DoThiCoDien:
         if node_id not in self.S:
             return self._khong_thay(node_id)
 
-        tren_duong: set = set()
-        for g in [n for n in self.S if self.S.in_degree(n) == 0]:
-            for duong in nx.all_simple_paths(self.S, g, node_id):
-                tren_duong.update(duong)
-        tren_duong.discard(node_id)
+        # Moi node co duong toi node dich deu nam trong to tien cua no
+        tren_duong = nx.ancestors(self.S, node_id)
 
-        # Tap goc phai tinh TREN DO THI GOC. Neu tinh lai sau khi bo node,
-        # cac node vua mat thuong nguon se bi coi la goc moi va luon tim ra
-        # duong di -> khong bao gio phat hien duoc diem hong don.
-        goc_ban_dau = frozenset(
-            n for n in self.S if self.S.in_degree(n) == 0
-        )
-
-        diem_don = []
-        for x in tren_duong:
-            if x in goc_ban_dau:
-                # Bo nguon goc thi tat nhien mat dien; van tinh la diem don
-                diem_don.append(self._tom_tat(x))
-                continue
-            H = self.S.copy()
-            H.remove_node(x)
-            con_nguon = any(
-                g in H and nx.has_path(H, g, node_id)
-                for g in goc_ban_dau
-            )
-            if not con_nguon:
-                diem_don.append(self._tom_tat(x))
+        diem_don = [self._tom_tat(x) for x in tren_duong
+                    if node_id in self._mat_dien_khi_bo(x)]
 
         diem_don.sort(key=lambda d: -(d.get("diem_rui_ro") or 0))
         return {
@@ -156,7 +134,10 @@ class DoThiCoDien:
         if node_id not in self.S:
             return self._khong_thay(node_id)
 
-        hau_due = nx.descendants(self.S, node_id)
+        # Chi tinh node mat het nguon. Node con duong khac (vi du MSB3 co hai
+        # may bien ap) thi mot nhanh hong khong lam no mat dien.
+        hau_due = self._mat_dien_khi_bo(node_id)
+        con_dien = len(nx.descendants(self.S, node_id)) - len(hau_due)
         thiet_bi, phu_tai = [], []
         tong_kVA = 0.0
         tang, cong_trinh = set(), set()
@@ -207,6 +188,7 @@ class DoThiCoDien:
             "so_phu_tai_mat_dien": len(phu_tai),
             "tong_cong_suat_kVA": round(tong_kVA, 2),
             "nguon_so_lieu_cong_suat": nguon_so_lieu,
+            "so_node_con_dien_nho_du_phong": con_dien,
             "cac_khoi": sorted(cong_trinh),
             "cac_tang": sorted(tang),
             "thiet_bi_mat_dien": thiet_bi[:50],
@@ -309,6 +291,23 @@ class DoThiCoDien:
         }
 
     # --- noi bo ------------------------------------------------------------
+
+    def _mat_dien_khi_bo(self, x: str) -> set:
+        """Tap node ha nguon cua x se mat dien hoan toan khi x hong.
+
+        Bo x ra, roi loang tu cac nguon goc con lai. Node ha nguon nao khong
+        con loang toi duoc la mat dien.
+
+        Tap goc phai tinh TREN DO THI GOC. Neu tinh lai sau khi bo x, cac node
+        vua mat thuong nguon se bi coi la goc moi va luon con "nguon".
+        """
+        goc = [n for n in self.S if self.S.in_degree(n) == 0 and n != x]
+        H = self.S.copy()
+        H.remove_node(x)
+        con_nguon = set(goc)
+        for g in goc:
+            con_nguon |= nx.descendants(H, g)
+        return nx.descendants(self.S, x) - con_nguon
 
     def _tom_tat(self, n: str) -> dict:
         d = self.G.nodes.get(n, {})

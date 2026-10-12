@@ -17,6 +17,7 @@ Chay truc tiep:
 """
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -80,7 +81,20 @@ ANH_XA_THUOC_TINH = {
     "Model": "model",
     "Length": "chieu_dai_m",
     "Comments": "ghi_chu",
+    # Busway Siemens LI: tham so tuyen nam tren tung doan thanh dan
+    "Busbar run number": "ma_tuyen",
+    "Busbar run description": "mo_ta_tuyen",
+    # Sinh ra o buoc gop_busway_va_tu, khong co trong Revit
+    "so_phan_tu_gop": "so_phan_tu_gop",
+    "revit_ids_gop": "revit_ids_gop",
+    "suy_dien": "suy_dien",
 }
+
+# Ten tham so dong dinh muc cua busway Siemens LI
+THAM_SO_INC = "Max. permissible operational current Inc (horizontal edgewise) (A)"
+
+# Nối mềm cach dau tu duoi nguong nay (m) thi coi la o phia tu do
+NGUONG_NOI_MEM_M = 5.0
 
 
 def doan_loai(thuoc_tinh: dict) -> str:
@@ -117,9 +131,192 @@ def doan_cong_trinh(thuoc_tinh: dict) -> str | None:
     return None
 
 
+def _chuan_hoa_ten(s) -> str:
+    """'MDB-F12', 'MDB.F12', 'mdb f12' -> 'mdbf12' de so khop ten tu."""
+    return re.sub(r"[^0-9a-z]", "", str(s or "").lower())
+
+
+def _so_hoac_none(v) -> float | None:
+    try:
+        return float(str(v).split()[0])
+    except (TypeError, ValueError, IndexError):
+        return None
+
+
+def _toa_do(d: dict) -> tuple | None:
+    try:
+        return float(d["x"]), float(d["y"]), float(d["z"])
+    except (KeyError, TypeError, ValueError):
+        return None
+
+
+def gop_busway_va_tu(G_vao: nx.DiGraph) -> nx.DiGraph:
+    """Dung quan he cap nguon tu tham so busway, khi model khong co circuit.
+
+    Model busway thuc te (nhu Hon Thom) khong co Electrical Circuit nao. Quan
+    he cap nguon nam o tham so cua tung doan thanh dan Siemens LI:
+
+        Busbar run number      = P12
+        Busbar run description = From MSB3 To MDB-F12
+
+    Ham nay tra ve do thi Revit da duoc sap xep lai:
+      - Moi tuyen (theo run number) gop thanh MOT node busway, thay cho hang
+        chuc doan thang, co, te. Chieu dai = tong Engineered length.
+      - Tu cung Panel Name gop thanh mot node: tu nhieu ngan (MSB3 ve bang 8
+        family instance) van la mot tu ve mat van hanh.
+      - Canh nguon -> tuyen -> dich lay tu "From X To Y". Dau nao khong co
+        trong model (vi du may bien ap TR-01-F nam o model khac) thi tao node
+        gia, danh dau suy_dien=1.
+      - Noi mem (flexible link) gan vao tuyen gan nhat theo toa do.
+
+    Model khong co tham so busway thi tra ve nguyen G_vao.
+    """
+    tuyen: dict[str, list] = {}
+    for n, d in G_vao.nodes(data=True):
+        so = str(d.get("Busbar run number") or "").strip()
+        if so:
+            tuyen.setdefault(so, []).append(n)
+    if not tuyen:
+        return G_vao
+
+    H = nx.DiGraph()
+    H.graph.update(G_vao.graph)
+    da_gop: set = set()
+
+    # 1. Gop tu cung ten
+    nhom_tu: dict[str, list] = {}
+    for n, d in G_vao.nodes(data=True):
+        if d.get("category") == "Electrical Equipment":
+            ten = d.get("Panel Name") or d.get("name")
+            if ten:
+                nhom_tu.setdefault(_chuan_hoa_ten(ten), []).append(n)
+    tu_theo_ten: dict[str, str] = {}
+    for khoa, ds in nhom_tu.items():
+        ds = sorted(ds, key=str)
+        dai_dien = ds[0]
+        attrs = dict(G_vao.nodes[dai_dien])
+        if len(ds) > 1:
+            attrs["so_phan_tu_gop"] = len(ds)
+            attrs["revit_ids_gop"] = ",".join(map(str, ds))
+        H.add_node(dai_dien, **attrs)
+        tu_theo_ten[khoa] = dai_dien
+        da_gop.update(ds)
+
+    def _dau_tuyen(ten: str) -> str:
+        khoa = _chuan_hoa_ten(ten)
+        if khoa in tu_theo_ten:
+            return tu_theo_ten[khoa]
+        nid = "suy_dien:" + ten
+        if nid not in H:
+            attrs = {"name": ten, "category": "Electrical Equipment",
+                     "suy_dien": 1}
+            if re.match(r"^(tr|mba)[\s\-_.]?\d", ten, re.I):
+                attrs["part_type"] = "Transformer"
+            H.add_node(nid, **attrs)
+        return nid
+
+    # 2. Gop tuyen busway
+    toa_do_tuyen: dict[str, list] = {}
+    for so, ds in sorted(tuyen.items()):
+        mau = G_vao.nodes[ds[0]]
+        dai_mm = sum(_so_hoac_none(G_vao.nodes[m].get("Engineered length"))
+                     or 0.0 for m in ds)
+        inc = [_so_hoac_none(G_vao.nodes[m].get(THAM_SO_INC)) for m in ds]
+        inc = [x for x in inc if x]
+        nid = "busway:" + so
+        attrs = {
+            "name": "Busway " + so,
+            "category": "Busbar run",
+            "Busbar run number": so,
+            "so_phan_tu_gop": len(ds),
+            "revit_ids_gop": ",".join(map(str, ds)),
+        }
+        mo_ta = mau.get("Busbar run description")
+        if mo_ta:
+            attrs["Busbar run description"] = mo_ta
+        if dai_mm:
+            attrs["Length"] = round(dai_mm / 1000.0, 2)
+        if inc:
+            attrs["Rating"] = min(inc)
+        H.add_node(nid, **attrs)
+        da_gop.update(ds)
+        toa_do_tuyen[nid] = [t for t in (_toa_do(G_vao.nodes[m]) for m in ds)
+                             if t]
+
+        m = re.match(r"^\s*from\s+(.+?)\s+to\s+(.+?)\s*$", str(mo_ta or ""),
+                     re.I)
+        if m:
+            H.add_edge(_dau_tuyen(m.group(1)), nid, loai="supplies")
+            H.add_edge(nid, _dau_tuyen(m.group(2)), loai="supplies")
+
+    # 3. Noi mem: gan vao tuyen gan nhat, gop cac pha cung tuyen
+    noi_mem: dict[str, list] = {}
+    for n, d in G_vao.nodes(data=True):
+        ten = (str(d.get("name") or "") + " " +
+               str(d.get("family") or "")).lower()
+        if n in da_gop or not any(
+                k in ten for k in ("flexible link", "flex link", "noi mem",
+                                   "nối mềm")):
+            continue
+        p = _toa_do(d)
+        if p is None or not toa_do_tuyen:
+            continue
+        gan_nhat = min(
+            toa_do_tuyen,
+            key=lambda t: min((_kc(p, q) for q in toa_do_tuyen[t]),
+                              default=float("inf")),
+        )
+        noi_mem.setdefault(gan_nhat, []).append(n)
+        da_gop.add(n)
+
+    for t, ds in noi_mem.items():
+        nid = "noi_mem:" + t.split(":", 1)[1]
+        H.add_node(nid, name="Nối mềm " + t.split(":", 1)[1],
+                   category="Flexible link", so_phan_tu_gop=len(ds),
+                   revit_ids_gop=",".join(map(str, ds)))
+        # Chen vao phia dau tuyen co tu nam gan noi mem
+        tam = _trung_binh([_toa_do(G_vao.nodes[m]) for m in ds])
+        nguon = next(iter(H.predecessors(t)), None)
+        dich = next(iter(H.successors(t)), None)
+        if dich is not None and tam and _gan_tu(H, dich, tam):
+            H.remove_edge(t, dich)
+            H.add_edge(t, nid, loai="supplies")
+            H.add_edge(nid, dich, loai="supplies")
+        elif nguon is not None:
+            H.remove_edge(nguon, t)
+            H.add_edge(nguon, nid, loai="supplies")
+            H.add_edge(nid, t, loai="supplies")
+
+    # 4. Giu phan con lai (mach, phu tai...) va canh cua chung
+    for n, d in G_vao.nodes(data=True):
+        if n not in da_gop:
+            H.add_node(n, **d)
+    for u, v, d in G_vao.edges(data=True):
+        if u in H and v in H and not H.has_edge(u, v):
+            H.add_edge(u, v, **d)
+    return H
+
+
+def _kc(a, b) -> float:
+    return sum((x - y) ** 2 for x, y in zip(a, b)) ** 0.5
+
+
+def _trung_binh(ds):
+    ds = [x for x in ds if x]
+    if not ds:
+        return None
+    return tuple(sum(c) / len(ds) for c in zip(*ds))
+
+
+def _gan_tu(H: nx.DiGraph, tu: str, p) -> bool:
+    q = _toa_do(H.nodes[tu])
+    return q is not None and _kc(p, q) <= NGUONG_NOI_MEM_M
+
+
 def chuyen_doi(G_vao: nx.DiGraph, ten_do_thi: str = "",
                ma_du_an: str = "") -> nx.DiGraph:
     """Chuyen do thi Revit sang schema Hawee."""
+    G_vao = gop_busway_va_tu(G_vao)
     G = nx.DiGraph()
     G.graph["ten_do_thi"] = ten_do_thi or G_vao.graph.get("ten_do_thi", "")
     if ma_du_an:

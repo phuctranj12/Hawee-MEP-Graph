@@ -29,6 +29,13 @@ Yêu cầu Python 3.10 trở lên.
 
 **1. Chuyển model Revit thành đồ thị**
 
+Chạy [extract/revit_xuat_graphml.py](extract/revit_xuat_graphml.py) bên trong
+Revit: dán vào node Python Script của Dynamo (chạy bằng Dynamo Player), hoặc
+đặt làm nút pyRevit. Script đọc quan hệ cấp nguồn qua Revit API, ghi
+`.graphml` cạnh file `.rvt`, rồi gọi luôn bộ chuyển đổi để ra `.hmepg`.
+
+Nếu đã có sẵn `.graphml`, chuyển đổi tay:
+
 ```bash
 python extract/chuyen_doi_revit.py duong_dan\xuat_tu_revit.graphml examples\cong_trinh.hmepg
 ```
@@ -87,6 +94,7 @@ hawee_mep/
   query.py                  Lớp truy xuất (phần "retrieval")
   cypher.py                 Sinh Cypher tương đương
   store_neo4j.py            Nạp vào Neo4j (giai đoạn B)
+extract/revit_xuat_graphml.py  Chạy trong Revit: xuất .graphml (thay Dynamo tay)
 extract/chuyen_doi_revit.py Chuyển graph Revit sang schema Hawee
 data/                       Bảng định mức. ⚠️ Số liệu còn là giá trị tạm
 mcp_server/server.py        MCP server
@@ -120,8 +128,16 @@ chỉ ra tủ thượng nguồn.
 
 ## Điều kiện để dùng được
 
-Đồ thị chỉ sinh được cạnh khi thiết bị trong Revit được **nối mạch logic**
-(có circuit, có quan hệ cấp nguồn), không phải chỉ vẽ cạnh nhau. Chạy
+Đồ thị chỉ sinh được cạnh khi Revit có **quan hệ cấp nguồn**, không phải chỉ
+vẽ cạnh nhau. Lấy được từ một trong hai nguồn:
+
+- Circuit (Electrical Circuit, Supply From) của tủ và phụ tải.
+- Tham số tuyến busway Siemens LI trên từng đoạn thanh dẫn: `Busbar run number`
+  và `Busbar run description` dạng `From MSB3 To MDB-F12`. Các đoạn được gộp
+  thành một node busway mỗi tuyến; đầu tuyến không có trong model (ví dụ máy
+  biến áp ở model khác) được tạo node với `suy_dien=1`.
+
+ Chạy
 `kiem_tra_chat_luong_model` để biết model còn thiếu chỗ nào.
 
 ## Việc còn phải làm

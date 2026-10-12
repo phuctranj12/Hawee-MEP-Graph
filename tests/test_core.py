@@ -223,3 +223,82 @@ def test_tong_quan_dem_dung():
     assert tq["so_nguon_goc"] == 1
     assert tq["la_dag"] is True
     assert tq["theo_loai"]["phu_tai"]["so_luong"] == 2
+
+
+# --- hai nguon cap song song (nhu MSB3 Hon Thom) ----------------------------
+
+def do_thi_hai_mba() -> nx.DiGraph:
+    """TR1 -> T1 -> MSB <- T2 <- TR2,  MSB -> P11 -> MDB -> phu tai."""
+    G = nx.DiGraph()
+    for n, loai in [("TR1", "may_bien_ap"), ("TR2", "may_bien_ap"),
+                    ("T1", "busway"), ("T2", "busway"), ("MSB", "tu_tong"),
+                    ("P11", "busway"), ("MDB", "tu_phan_phoi")]:
+        G.add_node(n, loai=loai, ten=n)
+    G.add_node("PT", loai="phu_tai", ten="PT", cong_suat_kVA=40)
+    for u, v in [("TR1", "T1"), ("T1", "MSB"), ("TR2", "T2"), ("T2", "MSB"),
+                 ("MSB", "P11"), ("P11", "MDB"), ("MDB", "PT")]:
+        G.add_edge(u, v, loai="supplies")
+    return G
+
+
+def test_hai_nguon_goc_khong_phai_diem_hong_don():
+    q = DoThiCoDien(risk.gan_vao_do_thi(do_thi_hai_mba()))
+    ids = {x["id"] for x in q.diem_hong_don("MDB")["diem_hong_don"]}
+    assert ids == {"MSB", "P11"}
+
+
+def test_anh_huong_mat_dien_tinh_den_du_phong():
+    q = DoThiCoDien(risk.gan_vao_do_thi(do_thi_hai_mba()))
+    kq = q.anh_huong_mat_dien("T1")
+    assert kq["so_thiet_bi_mat_dien"] == 0
+    assert kq["tong_cong_suat_kVA"] == 0
+    assert kq["so_node_con_dien_nho_du_phong"] > 0
+    assert q.anh_huong_mat_dien("MSB")["so_phu_tai_mat_dien"] == 1
+
+
+# --- gop tuyen busway tu tham so Siemens LI ----------------------------------
+
+def test_gop_busway_tu_tham_so_tuyen():
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "extract"))
+    from chuyen_doi_revit import chuyen_doi
+
+    R = nx.DiGraph()
+    # Tu MSB3 ve bang hai family instance; MDB ten khac kieu viet trong mo ta
+    R.add_node("1", category="Electrical Equipment", name="MSB3",
+               x=0, y=0, z=0)
+    R.add_node("2", category="Electrical Equipment", name="MSB3",
+               x=1, y=0, z=0)
+    R.add_node("3", category="Electrical Equipment", name="MDB.F12",
+               Level="F12.TẦNG HẦM", x=50, y=0, z=0)
+    for i, (so, mo_ta, x) in enumerate([
+            ("T1", "From TR-01-F To MSB3", -5), ("T1", "From TR-01-F To MSB3", -8),
+            ("P12", "From MSB3 To MDB-F12", 20), ("P12", "From MSB3 To MDB-F12", 40)]):
+        R.add_node("f%d" % i, category="Cable Tray Fittings", name="LI -L-HB",
+                   **{"Busbar run number": so, "Busbar run description": mo_ta,
+                      "Engineered length": "3000",
+                      model_inc(): "2000" if so == "T1" else "1250"},
+                   x=x, y=0, z=0)
+    # Noi mem: ten lay tu Mark, chi family moi cho biet la noi mem
+    R.add_node("nm", category="Electrical Fixtures", name="10",
+               family="TKT_Flexible link 3D: LI-A.2000A L1", x=-9, y=0, z=0)
+
+    G = chuyen_doi(R)
+    ten = {n: d["ten"] for n, d in G.nodes(data=True)}
+    canh = {(ten[u], ten[v]) for u, v in G.edges()}
+    assert canh == {
+        ("TR-01-F", "Nối mềm T1"), ("Nối mềm T1", "Busway T1"),
+        ("Busway T1", "MSB3"), ("MSB3", "Busway P12"),
+        ("Busway P12", "MDB.F12"),
+    }
+    bw = G.nodes["busway:P12"]
+    assert bw["loai"] == "busway"
+    assert bw["dong_dien_dinh_muc_A"] == 1250
+    assert bw["chieu_dai_m"] == 6.0
+    assert G.nodes["suy_dien:TR-01-F"]["loai"] == "may_bien_ap"
+    assert G.nodes["1"]["so_phan_tu_gop"] == 2
+    assert model.kiem_tra_do_thi(G)["hop_le"]
+
+
+def model_inc() -> str:
+    from chuyen_doi_revit import THAM_SO_INC
+    return THAM_SO_INC

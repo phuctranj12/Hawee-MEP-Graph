@@ -64,10 +64,19 @@ def truy_vet_ha_nguon(node_id: str, chi_thiet_bi: bool = True) -> str:
 
 
 def anh_huong_mat_dien(node_id: str) -> str:
+    """Node ha nguon MAT HET NGUON khi n hong (khop query.anh_huong_mat_dien).
+
+    Node con duong tu mot nguon goc khac ma khong di qua n (vi du MSB co hai
+    may bien ap) thi khong tinh la mat dien.
+    """
     return (
         f"MATCH (n:ThietBi {{id: '{_esc(node_id)}'}})\n"
         f"OPTIONAL MATCH (n)-[:CAP_NGUON*]->(m:ThietBi)\n"
-        f"WITH n, collect(DISTINCT m) AS anh_huong\n"
+        f"WITH n, collect(DISTINCT m) AS ha_nguon\n"
+        f"WITH n, [m IN ha_nguon WHERE NOT EXISTS {{\n"
+        f"    MATCH p = (g:ThietBi)-[:CAP_NGUON*]->(m)\n"
+        f"    WHERE NOT ()-[:CAP_NGUON]->(g) AND g <> n AND NOT n IN nodes(p)\n"
+        f"}}] AS anh_huong\n"
         f"RETURN n.ten AS thiet_bi,\n"
         f"       size([x IN anh_huong WHERE NOT x.loai IN ['mach','phu_tai']]) AS so_thiet_bi,\n"
         f"       size([x IN anh_huong WHERE x.loai = 'phu_tai']) AS so_phu_tai,\n"
@@ -97,16 +106,20 @@ def xep_hang_rui_ro(so_luong: int = 10, loai: str | None = None) -> str:
 
 
 def diem_don(node_id: str) -> str:
-    """Tim diem hong don (single point of failure) tren duong cap nguon."""
+    """Tim diem hong don (single point of failure) tren duong cap nguon.
+
+    x la diem hong don neu KHONG con duong nao tu mot nguon goc khac x toi n
+    ma tranh duoc x (khop query.diem_hong_don).
+    """
     return (
-        f"MATCH (n:ThietBi {{id: '{_esc(node_id)}'}})\n"
-        f"MATCH duong = (goc:ThietBi)-[:CAP_NGUON*]->(n)\n"
-        f"WHERE NOT ()-[:CAP_NGUON]->(goc)\n"
-        f"WITH n, nodes(duong) AS tren_duong\n"
-        f"UNWIND tren_duong AS x\n"
-        f"MATCH (x)\n"
-        f"WHERE size([(y)-[:CAP_NGUON]->(x) | y]) <= 1\n"
-        f"RETURN DISTINCT x.id AS id, x.ten AS ten, x.loai AS loai"
+        f"MATCH (x:ThietBi)-[:CAP_NGUON*]->(n:ThietBi {{id: '{_esc(node_id)}'}})\n"
+        f"WITH DISTINCT n, x\n"
+        f"WHERE NOT EXISTS {{\n"
+        f"    MATCH p = (g:ThietBi)-[:CAP_NGUON*]->(n)\n"
+        f"    WHERE NOT ()-[:CAP_NGUON]->(g) AND g <> x AND NOT x IN nodes(p)\n"
+        f"}}\n"
+        f"RETURN x.id AS id, x.ten AS ten, x.loai AS loai, x.diem_rui_ro AS diem_rui_ro\n"
+        f"ORDER BY x.diem_rui_ro DESC"
     )
 
 
